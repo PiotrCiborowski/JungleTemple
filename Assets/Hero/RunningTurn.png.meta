@@ -1,31 +1,46 @@
 fileFormatVersion: 2
-guid: 0639f3ce46b2f5a4997edd6b8ae1c7cf
+guid: 55dbbfae89c7c334fafbf81f7f2b3b6a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3527407432183010783
-    second: Turning_0
+      213: 5446579151465966789
+    second: RunningTurn_0
   - first:
-      213: 6775120372671542357
-    second: Turning_1
+      213: 3112145170813585354
+    second: RunningTurn_1
   - first:
-      213: -6580397326316011427
-    second: Turning_2
+      213: -1608855965323857158
+    second: RunningTurn_2
   - first:
-      213: -1524100522831025289
-    second: Turning_3
+      213: 8716219563888258572
+    second: RunningTurn_3
   - first:
-      213: 9136851871224683687
-    second: Turning_4
+      213: 5922548452522064859
+    second: RunningTurn_4
   - first:
-      213: 8475576944413367916
-    second: Turning_5
+      213: -7609477593259945653
+    second: RunningTurn_5
   - first:
-      213: -1654372699614604197
-    second: Turning_6
+      213: 5730655668962584354
+    second: RunningTurn_6
   - first:
-      213: -3777985489809090497
-    second: Turning_7
+      213: -2908270451604026432
+    second: RunningTurn_7
+  - first:
+      213: 7490310927689308716
+    second: RunningTurn_8
+  - first:
+      213: -7853420063983924450
+    second: RunningTurn_9
+  - first:
+      213: 2745717604305106463
+    second: RunningTurn_10
+  - first:
+      213: 529759740398099341
+    second: RunningTurn_11
+  - first:
+      213: -6479096832014455440
+    second: RunningTurn_12
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -113,12 +128,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Turning_0
+      name: RunningTurn_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 25
+        width: 37
         height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -127,19 +142,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 12aa8a221a12c0fc0800000000000000
-      internalID: -3527407432183010783
+      spriteID: 5cc6d2c81e2269b40800000000000000
+      internalID: 5446579151465966789
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Turning_1
+      name: RunningTurn_1
       rect:
         serializedVersion: 2
-        x: 25
+        x: 37
         y: 0
-        width: 25
+        width: 37
         height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -148,19 +163,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 55479933510160e50800000000000000
-      internalID: 6775120372671542357
+      spriteID: ac78ac34b8f803b20800000000000000
+      internalID: 3112145170813585354
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Turning_2
+      name: RunningTurn_2
       rect:
         serializedVersion: 2
-        x: 50
+        x: 74
         y: 0
-        width: 25
+        width: 37
         height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -169,19 +184,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d5001040f7bbda4a0800000000000000
-      internalID: -6580397326316011427
+      spriteID: af27a1c06023ca9e0800000000000000
+      internalID: -1608855965323857158
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Turning_3
+      name: RunningTurn_3
       rect:
         serializedVersion: 2
-        x: 75
+        x: 111
         y: 0
-        width: 25
+        width: 37
         height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -190,19 +205,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 77b6ba646ae49dae0800000000000000
-      internalID: -1524100522831025289
+      spriteID: c0eaed9438b36f870800000000000000
+      internalID: 8716219563888258572
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Turning_4
+      name: RunningTurn_4
       rect:
         serializedVersion: 2
-        x: 100
+        x: 148
         y: 0
-        width: 25
+        width: 37
         height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -211,19 +226,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7acd5b52e5e9cce70800000000000000
-      internalID: 9136851871224683687
+      spriteID: bdbfd95407e113250800000000000000
+      internalID: 5922548452522064859
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Turning_5
+      name: RunningTurn_5
       rect:
         serializedVersion: 2
-        x: 125
+        x: 185
         y: 0
-        width: 25
+        width: 37
         height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -232,19 +247,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c6edf3e435c4f9570800000000000000
-      internalID: 8475576944413367916
+      spriteID: b4152771274b56690800000000000000
+      internalID: -7609477593259945653
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Turning_6
+      name: RunningTurn_6
       rect:
         serializedVersion: 2
-        x: 150
+        x: 222
         y: 0
-        width: 25
+        width: 37
         height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -253,19 +268,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b541e518bcc7a09e0800000000000000
-      internalID: -1654372699614604197
+      spriteID: 227e796f7f0678f40800000000000000
+      internalID: 5730655668962584354
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Turning_7
+      name: RunningTurn_7
       rect:
         serializedVersion: 2
-        x: 175
+        x: 259
         y: 0
-        width: 25
+        width: 37
         height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -274,8 +289,113 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f385951b636e19bc0800000000000000
-      internalID: -3777985489809090497
+      spriteID: 0cb8065de6fb3a7d0800000000000000
+      internalID: -2908270451604026432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RunningTurn_8
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 0
+        width: 37
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2ad5267a1ee2f760800000000000000
+      internalID: 7490310927689308716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RunningTurn_9
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 0
+        width: 37
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1b005e9f0c030390800000000000000
+      internalID: -7853420063983924450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RunningTurn_10
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 0
+        width: 37
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f16742a1d9fba1620800000000000000
+      internalID: 2745717604305106463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RunningTurn_11
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 0
+        width: 37
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8b5bb65da51a5700800000000000000
+      internalID: 529759740398099341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RunningTurn_12
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 0
+        width: 37
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07d6b6e42cf9516a0800000000000000
+      internalID: -6479096832014455440
       vertices: []
       indices: 
       edges: []
