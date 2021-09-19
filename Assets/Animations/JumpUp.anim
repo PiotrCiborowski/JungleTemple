@@ -166,6 +166,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 1.4166666
+    functionName: AfterHanging
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 1.5
     functionName: Footstep
     data: 
@@ -182,6 +189,13 @@ AnimationClip:
     messageOptions: 0
   - time: 1.8333334
     functionName: CanMove
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.8333334
+    functionName: GetGrounded
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

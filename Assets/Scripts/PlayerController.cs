@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -16,11 +17,16 @@ public class PlayerController : MonoBehaviour
     bool isForward = true;
     bool isJumping = false;
     bool isJumpingUp = false;
+    bool isClimbing = false;
+    bool isDescending = false;
+    bool isDead = false;
+    bool isWinning = false;
 
     float fallingMomentum;
 
     [SerializeField] Transform groundCheck;
     [SerializeField] Transform grabCheck;
+    [SerializeField] Transform bodyCheck;
     [SerializeField] float runSpeed = 2.5f;
     [SerializeField] float crouchSpeed = 1f;
 
@@ -56,32 +62,41 @@ public class PlayerController : MonoBehaviour
         Vector2 groundCheckRaycastShort;
         Vector2 groundCheckRaycastLong;
         Vector2 grabRaycast;
+        Vector2 dropRaycast;
+        Vector2 bodyRaycast;
 
         if (isForward)
         {
             groundCheckRaycastShort = new Vector2(1.1f, -0.25f);
             groundCheckRaycastLong = new Vector2(1.5f, -0.25f);
-            grabRaycast = new Vector2(1, 0.5f);
+            grabRaycast = new Vector2(0.6f, 0.8f);
+            dropRaycast = new Vector2(-0.5f, 0);
+            bodyRaycast = new Vector2(0.3f, 0);
         }
         else
         {
             groundCheckRaycastShort = new Vector2(-1.1f, -0.25f);
             groundCheckRaycastLong = new Vector2(-1.5f, -0.25f);
-            grabRaycast = new Vector2(-1, 0.5f);
+            grabRaycast = new Vector2(-0.6f, 0.8f);
+            dropRaycast = new Vector2(0.5f, 0);
+            bodyRaycast = new Vector2(-0.3f, 0);
         }
 
 
         RaycastHit2D feet = Physics2D.Raycast(groundCheck.position, Vector2.down, Mathf.Abs(groundRaycast.y), 1 << 8);
         RaycastHit2D feetGroundShort = Physics2D.Raycast(groundCheck.position, groundCheckRaycastShort, Mathf.Abs(Pythagoras(groundCheckRaycastShort.x, groundCheckRaycastShort.y)), 1 << 8);
         RaycastHit2D feetGroundLong = Physics2D.Raycast(groundCheck.position, groundCheckRaycastLong, Mathf.Abs(Pythagoras(groundCheckRaycastLong.x, groundCheckRaycastLong.y)), 1 << 8);
-        RaycastHit2D hands = Physics2D.Raycast(grabCheck.position, grabRaycast, Mathf.Abs(Pythagoras(grabRaycast.x, grabRaycast.y)), 1 << 9);
+        RaycastHit2D body = Physics2D.Raycast(bodyCheck.position, bodyRaycast, Mathf.Abs(bodyRaycast.x), 1 << 9);
+        RaycastHit2D exitCheck = Physics2D.Raycast(bodyCheck.position, bodyRaycast, Mathf.Abs(bodyRaycast.x));
+        RaycastHit2D hands = Physics2D.Raycast(grabCheck.position, grabRaycast, Mathf.Abs(Pythagoras(grabRaycast.x, grabRaycast.y)), 1 << 10);
+        RaycastHit2D handsDrop = Physics2D.Raycast(groundCheck.position, dropRaycast, Mathf.Abs(dropRaycast.x), 1 << 10);
 
 
         //-------------------GROUND CHECK-------------------
 
         if (feet.collider == null)
         {
-            if (isJumping || isJumpingUp || isCrouching || animator.GetCurrentAnimatorStateInfo(0).IsName("StandingJump") || animator.GetCurrentAnimatorStateInfo(0).IsName("RunningJump"))
+            if (isJumping || isJumpingUp || isCrouching || isClimbing || isDescending || isWinning || animator.GetCurrentAnimatorStateInfo(0).IsName("StandingJump") || animator.GetCurrentAnimatorStateInfo(0).IsName("RunningJump"))
                 ;
             else if (isRunning || !isRunning)
             {
@@ -97,10 +112,21 @@ public class PlayerController : MonoBehaviour
                 animator.Play("ToFalling");
             }
 
-            if (isForward && !isJumpingUp && !animator.GetCurrentAnimatorStateInfo(0).IsName("StandingJump") && !animator.GetCurrentAnimatorStateInfo(0).IsName("RunningJump"))
-                rb.velocity = new Vector2(fallingMomentum, rb.velocity.y);
-            else if (!isForward && !isJumpingUp && !animator.GetCurrentAnimatorStateInfo(0).IsName("StandingJump") && !animator.GetCurrentAnimatorStateInfo(0).IsName("RunningJump"))
-                rb.velocity = new Vector2(-fallingMomentum, rb.velocity.y);
+            if (isForward && !isJumpingUp && !isClimbing && !isDescending && !isWinning && !animator.GetCurrentAnimatorStateInfo(0).IsName("StandingJump") && !animator.GetCurrentAnimatorStateInfo(0).IsName("RunningJump"))
+            {
+                if (body.collider == null)
+                    rb.velocity = new Vector2(fallingMomentum, rb.velocity.y);
+                else
+                    rb.velocity = new Vector2(0, rb.velocity.y);
+            }
+            else if (!isForward && !isJumpingUp && !isClimbing && !isDescending && !isWinning && !animator.GetCurrentAnimatorStateInfo(0).IsName("StandingJump") && !animator.GetCurrentAnimatorStateInfo(0).IsName("RunningJump"))
+            {
+                if (body.collider == null)
+                    rb.velocity = new Vector2(-fallingMomentum, rb.velocity.y);
+                else
+                    rb.velocity = new Vector2(0, rb.velocity.y);
+            }
+               
             /*isGrounded = false;
             animator.SetBool("Falling", true);
 
@@ -131,7 +157,7 @@ public class PlayerController : MonoBehaviour
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Falling"))
             {
                 Debug.Log("Time in air: " + animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
-                if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 40)
+                if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 35)
                 {
                     isGrounded = true;
                     animator.SetBool("Falling", false);
@@ -139,7 +165,7 @@ public class PlayerController : MonoBehaviour
 
                     Footstep();
                 }
-                else if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 40 && animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 50)
+                else if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 35 && animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 50)
                 {
                     heroHP -= 1;
 
@@ -149,10 +175,12 @@ public class PlayerController : MonoBehaviour
                     if (heroHP <= 0)
                     {
                         isGrounded = true;
+                        isDead = true;
                         spriteRenderer.flipX = false;
                         animator.SetTrigger("Die");
                         //animator.SetBool("Falling", false);
                         audioSource.pitch = 1;
+                        audioSource.volume = 1;
                         audioSource.PlayOneShot(fallDeath);
                         //fallingMomentum = 0;
                         CantMove();
@@ -162,6 +190,7 @@ public class PlayerController : MonoBehaviour
                         isGrounded = true;
                         animator.SetBool("Falling", false);
                         audioSource.pitch = 1;
+                        audioSource.volume = 1;
                         audioSource.PlayOneShot(fallHurt);
                         //fallingMomentum = 0;
                         CantMove();
@@ -178,10 +207,12 @@ public class PlayerController : MonoBehaviour
                     Invoke("HurtFlash", hurtTime);
 
                     isGrounded = true;
+                    isDead = true;
                     spriteRenderer.flipX = false;
                     animator.SetTrigger("Die");
                     //animator.SetBool("Falling", false);
                     audioSource.pitch = 1;
+                    audioSource.volume = 1;
                     audioSource.PlayOneShot(fallDeath);
                     //fallingMomentum = 0;
                     CantMove();
@@ -194,23 +225,32 @@ public class PlayerController : MonoBehaviour
 
         if (hands.collider == null)
             ;
-        /*else if (LayerMask.LayerToName(hands.collider.gameObject.layer) == "Grab")
-            Debug.Log("Works + " + hands.collider.gameObject.name);*/
+        else if (LayerMask.LayerToName(hands.collider.gameObject.layer) == "Grab")
+            ;//Debug.Log("Works + " + hands.collider.gameObject.name);
 
         Debug.DrawRay(groundCheck.position, groundRaycast, Color.red);
         Debug.DrawRay(groundCheck.position, groundCheckRaycastShort, Color.blue);
         Debug.DrawRay(groundCheck.position, groundCheckRaycastLong, Color.red);
+        Debug.DrawRay(bodyCheck.position, bodyRaycast, Color.white);
         Debug.DrawRay(grabCheck.position, grabRaycast, Color.red);
+        Debug.DrawRay(groundCheck.position, dropRaycast, Color.yellow);
 
 
         //-------------------MOVEMENT-------------------
 
         if (Input.GetKeyDown("r"))
         {
-            rb.transform.position = new Vector2(-3.5f, 0);          //DEBUG
-            animator.ResetTrigger("Die");
-            animator.Play("Standing");
-            CanMove();
+            /*if (isDead)
+            {*/
+                rb.transform.position = new Vector2(-14.5f, 2);          //DEBUG
+                heroHP = 3;
+                animator.ResetTrigger("Die");
+                animator.Play("Standing");
+                spriteRenderer.flipX = false;
+                isDead = false;
+                isForward = true;
+                CanMove();
+            //}
         }
 
         if (animator.GetBool("canMove"))                        //try to leave inputs here and move behaviour to fixedupdate
@@ -318,23 +358,94 @@ public class PlayerController : MonoBehaviour
 
             //-------------------UP-------------------
 
-            else if (Input.GetKeyDown("up") && !isRunning)
+            else if (Input.GetKeyDown("up") && !isRunning && !isClimbing)
             {
-                animator.SetTrigger("Jump");
+                if (exitCheck.collider == null || exitCheck.collider.tag != "Exit")
+                {
+                    animator.SetTrigger("Jump");
 
-                if (hands.collider == null)
-                    ;
-                else if (LayerMask.LayerToName(hands.collider.gameObject.layer) == "Grab")
-                    Debug.Log("Can grab");
+                    if (hands.collider == null)
+                        ;
+                    else if (LayerMask.LayerToName(hands.collider.gameObject.layer) == "Grab" && !isClimbing)
+                    {
+                        //Debug.Log("Can grab");
+
+                        if (isForward)
+                            rb.position = new Vector2(hands.collider.gameObject.transform.position.x - 0.3f, rb.position.y);
+                        else if (!isForward)
+                            rb.position = new Vector2(hands.collider.gameObject.transform.position.x + 0.3f, rb.position.y);
+
+                        isGrounded = false;
+                        isClimbing = true;
+                        animator.SetBool("Grip", true);
+                    }
+                }
+                else if (exitCheck.collider.tag == "Exit" && !isCrouching)
+                {
+                    CantMove();
+                    isWinning = true;
+                    rb.gravityScale = 0;
+                    spriteRenderer.flipX = false;
+                    rb.transform.position = new Vector2(exitCheck.collider.transform.position.x, exitCheck.collider.transform.position.y - 0.3f);
+                    animator.SetTrigger("Win");
+
+                    foreach (Transform child in exitCheck.transform)
+                    {
+                        child.GetComponent<Renderer>().sortingOrder = 20;
+                    }
+                }    
             }
+
+            else if (Input.GetKey("up") && isClimbing)
+            {
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("HangingWall") || animator.GetCurrentAnimatorStateInfo(0).IsName("Swinging") || animator.GetCurrentAnimatorStateInfo(0).IsName("SwingingSecond"))
+                {
+                    animator.SetTrigger("Climb");
+                }
+            }
+
+            else if (!Input.GetKey("up") && !Input.GetKey("left shift") && isClimbing && !isDescending)
+            {
+                isClimbing = false;
+                animator.SetBool("Grip", false);
+            }
+
+            /*else if (Input.GetKey("up") && isClimbing || Input.GetKey("left shift") && isClimbing)
+            {
+                animator.SetBool("Grip", true);
+                //rb.gravityScale = 0;
+                if (!Input.GetKey("up") && !Input.GetKey("left shift"))
+                {
+                    animator.SetBool("Grip", false);
+                    animator.ResetTrigger("Jump");
+                    isClimbing = false;
+                    //rb.gravityScale = 1;
+                }
+            }*/
 
 
             //-------------------DOWN-------------------
 
             else if (Input.GetKey("down") && isGrounded && !isRunning)
             {
-                animator.SetBool("Crouch", true);
-                isCrouching = true;
+                if (handsDrop.collider == null)
+                {
+                    animator.SetBool("Crouch", true);
+                    isCrouching = true;
+                }
+                else if (LayerMask.LayerToName(handsDrop.collider.gameObject.layer) == "Grab" && !animator.GetCurrentAnimatorStateInfo(0).IsName("Descending"))
+                {
+                    if (isForward)
+                        rb.position = new Vector2(handsDrop.collider.gameObject.transform.position.x + 0.1f, rb.position.y);
+                    else if (!isForward)
+                        rb.position = new Vector2(handsDrop.collider.gameObject.transform.position.x - 0.15f, rb.position.y);
+
+                    isGrounded = false;
+                    isClimbing = true;
+                    isDescending = true;
+                    animator.SetTrigger("Descend");
+                    animator.SetBool("Grip", true);
+                }
             }
 
 
@@ -371,6 +482,7 @@ public class PlayerController : MonoBehaviour
                 animator.ResetTrigger("Jump");
                 isRunning = false;
                 isCrouching = false;
+                //isClimbing = false;
 
                 if (isGrounded)
                     CanMove();
@@ -381,7 +493,16 @@ public class PlayerController : MonoBehaviour
     void Footstep()
     {
         audioSource.clip = footsteps[Random.Range(0, footsteps.Length)];
-        audioSource.pitch = Random.Range(0.9f, 1.1f);
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Step"))
+        {
+            audioSource.pitch = Random.Range(0.85f, 0.95f);
+            audioSource.volume = 0.35f;
+        }
+        else
+        {
+            audioSource.pitch = Random.Range(0.9f, 1.1f);
+            audioSource.volume = 1;
+        }
 
         audioSource.PlayOneShot(audioSource.clip);
     }
@@ -468,6 +589,11 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("canMove", true);
     }
 
+    void GetGrounded()
+    {
+        isGrounded = true;
+    }
+
     void StopMove()
     {
         rb.velocity = new Vector2(0.5f, rb.velocity.y);
@@ -495,9 +621,9 @@ public class PlayerController : MonoBehaviour
     void StepMove()
     {
         if (isForward)
-            rb.velocity = new Vector2(crouchSpeed * 1.5f, rb.velocity.y);
+            rb.velocity = new Vector2(crouchSpeed * 1.25f, rb.velocity.y);
         else if (!isForward)
-            rb.velocity = new Vector2(-crouchSpeed * 1.5f, rb.velocity.y);
+            rb.velocity = new Vector2(-crouchSpeed * 1.25f, rb.velocity.y);
     }
 
     void Jump()
@@ -516,9 +642,9 @@ public class PlayerController : MonoBehaviour
     void JumpUpMove()
     {
         if (isForward)
-            rb.velocity = new Vector2(0.15f, 2.5f);
+            rb.velocity = new Vector2(0.15f, 2.8f);
         else if (!isForward)
-            rb.velocity = new Vector2(-0.15f, 2.5f);
+            rb.velocity = new Vector2(-0.15f, 2.8f);
     }
 
     void JumpUpCheckForward()
@@ -571,5 +697,73 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(runSpeed, rb.velocity.y);
         else if (!isForward)
             rb.velocity = new Vector2(-runSpeed, rb.velocity.y);
+    }
+
+    void HangingMoveToLedge()
+    {
+        if (isForward)
+            rb.velocity = new Vector2(0.85f, rb.velocity.y);
+        else if (!isForward)
+            rb.velocity = new Vector2(-0.85f, rb.velocity.y);
+    }
+
+    void BeforeHanging()
+    {
+        rb.gravityScale = 0;
+        rb.velocity = new Vector2(0, 0);
+    }
+
+    void ClimbingUpMove()
+    {
+        rb.velocity = new Vector2(0, 2.225f);
+    }
+
+    void ClimbingUpMoveForward()
+    {
+        if (isForward)
+            rb.velocity = new Vector2(0.665f, 0);
+        else if (!isForward)
+            rb.velocity = new Vector2(-0.665f, 0);
+    }
+
+    void DescendingMoveBack()
+    {
+        if (isForward)
+            rb.velocity = new Vector2(-0.665f, 0);
+        else if (!isForward)
+            rb.velocity = new Vector2(0.665f, 0);
+    }
+
+    void DescendingMove()
+    {
+        rb.velocity = new Vector2(0, -2.95f);
+    }
+
+    void StopDescending()
+    {
+        isDescending = false;
+    }
+
+    void AfterHanging()
+    {
+        rb.gravityScale = 1;
+    }
+
+    void LevelFinish()
+    {
+        rb.velocity = new Vector2(0.16f, 0.36f);
+    }
+
+    void LevelFinishStop()
+    {
+        rb.velocity = new Vector2(0, 0);
+        spriteRenderer.enabled = false;
+        Invoke("QuitGame", 3);
+    }
+
+    void QuitGame()
+    {
+        Application.Quit();
+        Debug.Log("Quit");
     }
 }
