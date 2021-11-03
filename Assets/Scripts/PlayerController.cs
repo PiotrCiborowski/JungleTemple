@@ -56,6 +56,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.x + 1.1f) + Mathf.RoundToInt(transform.position.y + 1.1f);
+
         //-------------------RAYCASTS-------------------
 
         Vector2 groundRaycast = new Vector2(0, -0.25f);
@@ -247,11 +249,17 @@ public class PlayerController : MonoBehaviour
                 animator.ResetTrigger("Die");
                 animator.Play("Standing");
                 spriteRenderer.flipX = false;
-                isDead = false;
                 isForward = true;
+                isJumping = false;
+                isJumpingUp = false;
+                isDead = false;
+                rb.gravityScale = 1;
                 CanMove();
             //}
         }
+
+        if (Input.GetKeyDown("escape"))
+            QuitGame();
 
         if (animator.GetBool("canMove"))                        //try to leave inputs here and move behaviour to fixedupdate
         {
@@ -391,7 +399,7 @@ public class PlayerController : MonoBehaviour
 
                     foreach (Transform child in exitCheck.transform)
                     {
-                        child.GetComponent<Renderer>().sortingOrder = 20;
+                        child.GetComponent<Renderer>().sortingOrder = spriteRenderer.sortingOrder + 20;
                     }
                 }    
             }
@@ -758,7 +766,20 @@ public class PlayerController : MonoBehaviour
     {
         rb.velocity = new Vector2(0, 0);
         spriteRenderer.enabled = false;
-        Invoke("QuitGame", 3);
+        Invoke("NextLevel", 3);
+    }
+
+    void NextLevel()
+    {
+        if (SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 1)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        else
+        {
+            Application.Quit();
+            Debug.Log("Quit");
+        }
     }
 
     void QuitGame()
