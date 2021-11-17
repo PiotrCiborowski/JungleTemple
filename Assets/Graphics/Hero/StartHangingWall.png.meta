@@ -125,7 +125,7 @@ TextureImporter:
       name: StartHangingWall_1
       rect:
         serializedVersion: 2
-        x: 25
+        x: 26
         y: 0
         width: 25
         height: 55
@@ -146,7 +146,7 @@ TextureImporter:
       name: StartHangingWall_2
       rect:
         serializedVersion: 2
-        x: 50
+        x: 52
         y: 0
         width: 25
         height: 55
@@ -167,7 +167,7 @@ TextureImporter:
       name: StartHangingWall_3
       rect:
         serializedVersion: 2
-        x: 75
+        x: 78
         y: 0
         width: 25
         height: 55

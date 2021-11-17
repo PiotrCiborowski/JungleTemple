@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour
     bool isDead = false;
     bool isWinning = false;
 
+    public static bool almostPressButton = true;
+    public static bool pressButton = true;
+
     float fallingMomentum;
 
     [SerializeField] Transform groundCheck;
@@ -56,7 +59,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.x + 1.1f) + Mathf.RoundToInt(transform.position.y + 1.1f);
+        //spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.x + 1.1f) + Mathf.RoundToInt(transform.position.y + 1.1f);
 
         //-------------------RAYCASTS-------------------
 
@@ -399,7 +402,7 @@ public class PlayerController : MonoBehaviour
 
                     foreach (Transform child in exitCheck.transform)
                     {
-                        child.GetComponent<Renderer>().sortingOrder = spriteRenderer.sortingOrder + 20;
+                        child.GetComponent<Renderer>().sortingLayerName = "Foreground";
                     }
                 }    
             }
@@ -755,6 +758,22 @@ public class PlayerController : MonoBehaviour
     void AfterHanging()
     {
         rb.gravityScale = 1;
+    }
+
+    void FalseBothButton()
+    {
+        almostPressButton = false;
+        pressButton = false;
+    }
+
+    void AlmostPressButton()
+    {
+        almostPressButton = true;
+    }
+
+    void PressButton()
+    {
+        pressButton = true;
     }
 
     void LevelFinish()

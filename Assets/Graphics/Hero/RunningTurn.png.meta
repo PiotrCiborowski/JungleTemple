@@ -152,7 +152,7 @@ TextureImporter:
       name: RunningTurn_1
       rect:
         serializedVersion: 2
-        x: 37
+        x: 38
         y: 0
         width: 37
         height: 50
@@ -173,7 +173,7 @@ TextureImporter:
       name: RunningTurn_2
       rect:
         serializedVersion: 2
-        x: 74
+        x: 76
         y: 0
         width: 37
         height: 50
@@ -194,7 +194,7 @@ TextureImporter:
       name: RunningTurn_3
       rect:
         serializedVersion: 2
-        x: 111
+        x: 114
         y: 0
         width: 37
         height: 50
@@ -215,7 +215,7 @@ TextureImporter:
       name: RunningTurn_4
       rect:
         serializedVersion: 2
-        x: 148
+        x: 152
         y: 0
         width: 37
         height: 50
@@ -236,7 +236,7 @@ TextureImporter:
       name: RunningTurn_5
       rect:
         serializedVersion: 2
-        x: 185
+        x: 190
         y: 0
         width: 37
         height: 50
@@ -257,7 +257,7 @@ TextureImporter:
       name: RunningTurn_6
       rect:
         serializedVersion: 2
-        x: 222
+        x: 228
         y: 0
         width: 37
         height: 50
@@ -278,7 +278,7 @@ TextureImporter:
       name: RunningTurn_7
       rect:
         serializedVersion: 2
-        x: 259
+        x: 266
         y: 0
         width: 37
         height: 50
@@ -299,7 +299,7 @@ TextureImporter:
       name: RunningTurn_8
       rect:
         serializedVersion: 2
-        x: 296
+        x: 304
         y: 0
         width: 37
         height: 50
@@ -320,7 +320,7 @@ TextureImporter:
       name: RunningTurn_9
       rect:
         serializedVersion: 2
-        x: 333
+        x: 342
         y: 0
         width: 37
         height: 50
@@ -341,7 +341,7 @@ TextureImporter:
       name: RunningTurn_10
       rect:
         serializedVersion: 2
-        x: 370
+        x: 380
         y: 0
         width: 37
         height: 50
@@ -362,7 +362,7 @@ TextureImporter:
       name: RunningTurn_11
       rect:
         serializedVersion: 2
-        x: 407
+        x: 418
         y: 0
         width: 37
         height: 50
@@ -383,7 +383,7 @@ TextureImporter:
       name: RunningTurn_12
       rect:
         serializedVersion: 2
-        x: 444
+        x: 456
         y: 0
         width: 37
         height: 50

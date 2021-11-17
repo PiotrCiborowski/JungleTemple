@@ -161,7 +161,7 @@ TextureImporter:
       name: SwingingSecond_1
       rect:
         serializedVersion: 2
-        x: 50
+        x: 51
         y: 0
         width: 50
         height: 55
@@ -182,7 +182,7 @@ TextureImporter:
       name: SwingingSecond_2
       rect:
         serializedVersion: 2
-        x: 100
+        x: 102
         y: 0
         width: 50
         height: 55
@@ -203,7 +203,7 @@ TextureImporter:
       name: SwingingSecond_3
       rect:
         serializedVersion: 2
-        x: 150
+        x: 153
         y: 0
         width: 50
         height: 55
@@ -224,7 +224,7 @@ TextureImporter:
       name: SwingingSecond_4
       rect:
         serializedVersion: 2
-        x: 200
+        x: 204
         y: 0
         width: 50
         height: 55
@@ -245,7 +245,7 @@ TextureImporter:
       name: SwingingSecond_5
       rect:
         serializedVersion: 2
-        x: 250
+        x: 255
         y: 0
         width: 50
         height: 55
@@ -266,7 +266,7 @@ TextureImporter:
       name: SwingingSecond_6
       rect:
         serializedVersion: 2
-        x: 300
+        x: 306
         y: 0
         width: 50
         height: 55
@@ -287,7 +287,7 @@ TextureImporter:
       name: SwingingSecond_7
       rect:
         serializedVersion: 2
-        x: 350
+        x: 357
         y: 0
         width: 50
         height: 55
@@ -308,7 +308,7 @@ TextureImporter:
       name: SwingingSecond_8
       rect:
         serializedVersion: 2
-        x: 400
+        x: 408
         y: 0
         width: 50
         height: 55
@@ -329,7 +329,7 @@ TextureImporter:
       name: SwingingSecond_9
       rect:
         serializedVersion: 2
-        x: 450
+        x: 459
         y: 0
         width: 50
         height: 55
@@ -350,7 +350,7 @@ TextureImporter:
       name: SwingingSecond_10
       rect:
         serializedVersion: 2
-        x: 500
+        x: 510
         y: 0
         width: 50
         height: 55
@@ -371,7 +371,7 @@ TextureImporter:
       name: SwingingSecond_11
       rect:
         serializedVersion: 2
-        x: 550
+        x: 561
         y: 0
         width: 50
         height: 55
@@ -392,7 +392,7 @@ TextureImporter:
       name: SwingingSecond_12
       rect:
         serializedVersion: 2
-        x: 600
+        x: 612
         y: 0
         width: 50
         height: 55
@@ -413,7 +413,7 @@ TextureImporter:
       name: SwingingSecond_13
       rect:
         serializedVersion: 2
-        x: 650
+        x: 663
         y: 0
         width: 50
         height: 55
@@ -434,7 +434,7 @@ TextureImporter:
       name: SwingingSecond_14
       rect:
         serializedVersion: 2
-        x: 700
+        x: 714
         y: 0
         width: 50
         height: 55
@@ -455,7 +455,7 @@ TextureImporter:
       name: SwingingSecond_15
       rect:
         serializedVersion: 2
-        x: 750
+        x: 765
         y: 0
         width: 50
         height: 55

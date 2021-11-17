@@ -149,7 +149,7 @@ TextureImporter:
       name: Step_1
       rect:
         serializedVersion: 2
-        x: 28
+        x: 29
         y: 0
         width: 28
         height: 50
@@ -170,7 +170,7 @@ TextureImporter:
       name: Step_2
       rect:
         serializedVersion: 2
-        x: 56
+        x: 58
         y: 0
         width: 28
         height: 50
@@ -191,7 +191,7 @@ TextureImporter:
       name: Step_3
       rect:
         serializedVersion: 2
-        x: 84
+        x: 87
         y: 0
         width: 28
         height: 50
@@ -212,7 +212,7 @@ TextureImporter:
       name: Step_4
       rect:
         serializedVersion: 2
-        x: 112
+        x: 116
         y: 0
         width: 28
         height: 50
@@ -233,7 +233,7 @@ TextureImporter:
       name: Step_5
       rect:
         serializedVersion: 2
-        x: 140
+        x: 145
         y: 0
         width: 28
         height: 50
@@ -254,7 +254,7 @@ TextureImporter:
       name: Step_6
       rect:
         serializedVersion: 2
-        x: 168
+        x: 174
         y: 0
         width: 28
         height: 50
@@ -275,7 +275,7 @@ TextureImporter:
       name: Step_7
       rect:
         serializedVersion: 2
-        x: 196
+        x: 203
         y: 0
         width: 28
         height: 50
@@ -296,7 +296,7 @@ TextureImporter:
       name: Step_8
       rect:
         serializedVersion: 2
-        x: 224
+        x: 232
         y: 0
         width: 28
         height: 50
@@ -317,7 +317,7 @@ TextureImporter:
       name: Step_9
       rect:
         serializedVersion: 2
-        x: 252
+        x: 261
         y: 0
         width: 28
         height: 50
@@ -338,7 +338,7 @@ TextureImporter:
       name: Step_10
       rect:
         serializedVersion: 2
-        x: 280
+        x: 290
         y: 0
         width: 28
         height: 50
@@ -359,7 +359,7 @@ TextureImporter:
       name: Step_11
       rect:
         serializedVersion: 2
-        x: 308
+        x: 319
         y: 0
         width: 28
         height: 50

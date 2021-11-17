@@ -150,8 +150,8 @@ TextureImporter:
         y: 0
         width: 25
         height: 54
-      alignment: 9
-      pivot: {x: 0.5, y: 0.47}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -167,12 +167,12 @@ TextureImporter:
       name: JumpUp_1
       rect:
         serializedVersion: 2
-        x: 25
+        x: 26
         y: 0
         width: 25
         height: 54
-      alignment: 9
-      pivot: {x: 0.5, y: 0.47}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -188,12 +188,12 @@ TextureImporter:
       name: JumpUp_2
       rect:
         serializedVersion: 2
-        x: 50
+        x: 52
         y: 0
         width: 25
         height: 54
-      alignment: 9
-      pivot: {x: 0.5, y: 0.47}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -209,12 +209,12 @@ TextureImporter:
       name: JumpUp_3
       rect:
         serializedVersion: 2
-        x: 75
+        x: 78
         y: 0
         width: 25
         height: 54
-      alignment: 9
-      pivot: {x: 0.5, y: 0.47}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -230,12 +230,12 @@ TextureImporter:
       name: JumpUp_4
       rect:
         serializedVersion: 2
-        x: 100
+        x: 104
         y: 0
         width: 25
         height: 54
-      alignment: 9
-      pivot: {x: 0.5, y: 0.47}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -251,12 +251,12 @@ TextureImporter:
       name: JumpUp_5
       rect:
         serializedVersion: 2
-        x: 125
+        x: 130
         y: 0
         width: 25
         height: 54
-      alignment: 9
-      pivot: {x: 0.5, y: 0.47}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -272,12 +272,12 @@ TextureImporter:
       name: JumpUp_6
       rect:
         serializedVersion: 2
-        x: 150
+        x: 156
         y: 0
         width: 25
         height: 54
-      alignment: 9
-      pivot: {x: 0.5, y: 0.47}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -293,12 +293,12 @@ TextureImporter:
       name: JumpUp_7
       rect:
         serializedVersion: 2
-        x: 175
+        x: 182
         y: 0
         width: 25
         height: 54
-      alignment: 9
-      pivot: {x: 0.5, y: 0.47}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -314,12 +314,12 @@ TextureImporter:
       name: JumpUp_8
       rect:
         serializedVersion: 2
-        x: 200
+        x: 208
         y: 0
         width: 25
         height: 54
-      alignment: 9
-      pivot: {x: 0.5, y: 0.47}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -335,12 +335,12 @@ TextureImporter:
       name: JumpUp_9
       rect:
         serializedVersion: 2
-        x: 225
+        x: 234
         y: 0
         width: 25
         height: 54
-      alignment: 9
-      pivot: {x: 0.5, y: 0.47}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -356,12 +356,12 @@ TextureImporter:
       name: JumpUp_10
       rect:
         serializedVersion: 2
-        x: 250
+        x: 260
         y: 0
         width: 25
         height: 54
-      alignment: 9
-      pivot: {x: 0.5, y: 0.47}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -377,12 +377,12 @@ TextureImporter:
       name: JumpUp_11
       rect:
         serializedVersion: 2
-        x: 275
+        x: 286
         y: 0
         width: 25
         height: 54
-      alignment: 9
-      pivot: {x: 0.5, y: 0.47}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -398,12 +398,12 @@ TextureImporter:
       name: JumpUp_12
       rect:
         serializedVersion: 2
-        x: 300
+        x: 312
         y: 0
         width: 25
         height: 54
-      alignment: 9
-      pivot: {x: 0.5, y: 0.47}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -419,12 +419,12 @@ TextureImporter:
       name: JumpUp_13
       rect:
         serializedVersion: 2
-        x: 325
+        x: 338
         y: 0
         width: 25
         height: 54
-      alignment: 9
-      pivot: {x: 0.5, y: 0.47}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -440,12 +440,12 @@ TextureImporter:
       name: JumpUp_14
       rect:
         serializedVersion: 2
-        x: 350
+        x: 364
         y: 0
         width: 25
         height: 54
-      alignment: 9
-      pivot: {x: 0.5, y: 0.47}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -461,12 +461,12 @@ TextureImporter:
       name: JumpUp_15
       rect:
         serializedVersion: 2
-        x: 375
+        x: 390
         y: 0
         width: 25
         height: 54
-      alignment: 9
-      pivot: {x: 0.5, y: 0.47}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -482,12 +482,12 @@ TextureImporter:
       name: JumpUp_16
       rect:
         serializedVersion: 2
-        x: 400
+        x: 416
         y: 0
         width: 25
         height: 54
-      alignment: 9
-      pivot: {x: 0.5, y: 0.47}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -503,12 +503,12 @@ TextureImporter:
       name: JumpUp_17
       rect:
         serializedVersion: 2
-        x: 425
+        x: 442
         y: 0
         width: 25
         height: 54
-      alignment: 9
-      pivot: {x: 0.5, y: 0.47}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
