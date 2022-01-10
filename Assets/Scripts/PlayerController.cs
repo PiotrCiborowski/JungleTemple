@@ -36,15 +36,44 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip[] footsteps;
     [SerializeField] AudioClip fallHurt;
     [SerializeField] AudioClip fallDeath;
+    [SerializeField] AudioClip sliceDeath;
 
     [SerializeField] Image hurtFlash;
     [SerializeField] float hurtTime = 0.05f;
 
     public static int heroHP = 3;
 
+    CapsuleCollider2D cap;
+    float defaultValue;
+    float defaultOffset;
+
     float Pythagoras(float a, float b)
     {
         return Mathf.Sqrt(a * a + b * b);
+    }
+
+    public void ChomperKill(GameObject chomper)
+    {
+        if (!isDead)
+        {
+            heroHP = 0;
+
+            hurtFlash.enabled = true;
+            Invoke("HurtFlash", hurtTime);
+
+            rb.position = new Vector2(chomper.transform.position.x, rb.position.y);
+
+            isGrounded = true;
+            isDead = true;
+            //spriteRenderer.flipX = false;
+            animator.SetTrigger("Die");
+            animator.Play("SliceDeath");
+            //animator.SetBool("Falling", false);
+            audioSource.pitch = 1;
+            audioSource.volume = 1;
+            audioSource.PlayOneShot(sliceDeath);
+            CantMove();
+        }
     }
 
     void Start()
@@ -55,17 +84,27 @@ public class PlayerController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
         fallingMomentum = runSpeed * 0.85f;
+
+        cap = GetComponent<CapsuleCollider2D>();
+        defaultValue = cap.size.y;
+        defaultOffset = cap.offset.y;
     }
 
     void Update()
     {
-        //spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.x + 1.1f) + Mathf.RoundToInt(transform.position.y + 1.1f);
+        spriteRenderer.sortingOrder = Mathf.RoundToInt(transform.position.x - 0.9f) + Mathf.RoundToInt(transform.position.y - 0.9f);
+
+        if (spriteRenderer.flipX && !animator.GetBool("isLeft"))
+            animator.SetBool("isLeft", true);
+        else if (!spriteRenderer.flipX && animator.GetBool("isLeft"))
+            animator.SetBool("isLeft", false);
 
         //-------------------RAYCASTS-------------------
 
         Vector2 groundRaycast = new Vector2(0, -0.25f);
         Vector2 groundCheckRaycastShort;
         Vector2 groundCheckRaycastLong;
+        Vector2 wallAboveRaycast = new Vector2(0, 0.5f);
         Vector2 grabRaycast;
         Vector2 dropRaycast;
         Vector2 bodyRaycast;
@@ -91,6 +130,7 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D feet = Physics2D.Raycast(groundCheck.position, Vector2.down, Mathf.Abs(groundRaycast.y), 1 << 8);
         RaycastHit2D feetGroundShort = Physics2D.Raycast(groundCheck.position, groundCheckRaycastShort, Mathf.Abs(Pythagoras(groundCheckRaycastShort.x, groundCheckRaycastShort.y)), 1 << 8);
         RaycastHit2D feetGroundLong = Physics2D.Raycast(groundCheck.position, groundCheckRaycastLong, Mathf.Abs(Pythagoras(groundCheckRaycastLong.x, groundCheckRaycastLong.y)), 1 << 8);
+        RaycastHit2D wallAboveCheck = Physics2D.Raycast(grabCheck.position, Vector2.up, Mathf.Abs(wallAboveRaycast.y), 1 << 9);
         RaycastHit2D body = Physics2D.Raycast(bodyCheck.position, bodyRaycast, Mathf.Abs(bodyRaycast.x), 1 << 9);
         RaycastHit2D exitCheck = Physics2D.Raycast(bodyCheck.position, bodyRaycast, Mathf.Abs(bodyRaycast.x));
         RaycastHit2D hands = Physics2D.Raycast(grabCheck.position, grabRaycast, Mathf.Abs(Pythagoras(grabRaycast.x, grabRaycast.y)), 1 << 10);
@@ -236,6 +276,7 @@ public class PlayerController : MonoBehaviour
         Debug.DrawRay(groundCheck.position, groundRaycast, Color.red);
         Debug.DrawRay(groundCheck.position, groundCheckRaycastShort, Color.blue);
         Debug.DrawRay(groundCheck.position, groundCheckRaycastLong, Color.red);
+        Debug.DrawRay(grabCheck.position, wallAboveRaycast, Color.magenta);
         Debug.DrawRay(bodyCheck.position, bodyRaycast, Color.white);
         Debug.DrawRay(grabCheck.position, grabRaycast, Color.red);
         Debug.DrawRay(groundCheck.position, dropRaycast, Color.yellow);
@@ -247,7 +288,7 @@ public class PlayerController : MonoBehaviour
         {
             /*if (isDead)
             {*/
-                rb.transform.position = new Vector2(-14.5f, 2);          //DEBUG
+                rb.transform.position = new Vector3(-14.5f, 2, 1);          //DEBUG
                 heroHP = 3;
                 animator.ResetTrigger("Die");
                 animator.Play("Standing");
@@ -277,7 +318,7 @@ public class PlayerController : MonoBehaviour
                     else
                     {
                         animator.SetBool("Running", true);
-                        rb.velocity = new Vector2(runSpeed, rb.velocity.y);
+                        //rb.velocity = new Vector2(runSpeed, rb.velocity.y);
                         isRunning = true;
 
                         if (Input.GetKey("down"))
@@ -354,7 +395,7 @@ public class PlayerController : MonoBehaviour
                         animator.SetTrigger("Step");
                         rb.velocity = new Vector2(-crouchSpeed, rb.velocity.y);
 
-                        if (animator.GetCurrentAnimatorStateInfo(0).IsName("CrouchMove"))
+                        if (animator.GetCurrentAnimatorStateInfo(0).IsName("CrouchMoveLeft"))
                             animator.ResetTrigger("Step");
 
                         if (Input.GetKeyUp("down"))
@@ -373,22 +414,33 @@ public class PlayerController : MonoBehaviour
             {
                 if (exitCheck.collider == null || exitCheck.collider.tag != "Exit")
                 {
-                    animator.SetTrigger("Jump");
-
-                    if (hands.collider == null)
-                        ;
-                    else if (LayerMask.LayerToName(hands.collider.gameObject.layer) == "Grab" && !isClimbing)
+                    if (wallAboveCheck.collider != null)
                     {
-                        //Debug.Log("Can grab");
+                        animator.SetTrigger("JumpWallAbove");
+                        //wallAboveCheck.collider.GetComponent<SpriteRenderer>().sortingLayerName = "Foreground";
+                        //StartCoroutine(SetToBackground(2f, wallAboveCheck.collider));
+                        if (wallAboveCheck.collider.tag == "Above Wall")
+                            wallAboveCheck.collider.GetComponent<WallController>().ChangeLayer();
+                    }
+                    else
+                    {
+                        animator.SetTrigger("Jump");
 
-                        if (isForward)
-                            rb.position = new Vector2(hands.collider.gameObject.transform.position.x - 0.3f, rb.position.y);
-                        else if (!isForward)
-                            rb.position = new Vector2(hands.collider.gameObject.transform.position.x + 0.3f, rb.position.y);
+                        if (hands.collider == null)
+                            ;
+                        else if (LayerMask.LayerToName(hands.collider.gameObject.layer) == "Grab" && !isClimbing)
+                        {
+                            //Debug.Log("Can grab");
 
-                        isGrounded = false;
-                        isClimbing = true;
-                        animator.SetBool("Grip", true);
+                            if (isForward)
+                                rb.position = new Vector2(hands.collider.gameObject.transform.position.x - 0.35f, rb.position.y);
+                            else if (!isForward)
+                                rb.position = new Vector2(hands.collider.gameObject.transform.position.x + 0.3f, rb.position.y);
+
+                            isGrounded = false;
+                            isClimbing = true;
+                            animator.SetBool("Grip", true);
+                        }
                     }
                 }
                 else if (exitCheck.collider.tag == "Exit" && !isCrouching)
@@ -397,7 +449,7 @@ public class PlayerController : MonoBehaviour
                     isWinning = true;
                     rb.gravityScale = 0;
                     spriteRenderer.flipX = false;
-                    rb.transform.position = new Vector2(exitCheck.collider.transform.position.x, exitCheck.collider.transform.position.y - 0.3f);
+                    rb.transform.position = new Vector3(exitCheck.collider.transform.position.x, exitCheck.collider.transform.position.y - 0.3f, 1);
                     animator.SetTrigger("Win");
 
                     foreach (Transform child in exitCheck.transform)
@@ -491,6 +543,7 @@ public class PlayerController : MonoBehaviour
                 animator.SetBool("Crouch", false);
                 animator.ResetTrigger("Step");
                 animator.ResetTrigger("Jump");
+                animator.ResetTrigger("JumpWallAbove");
                 isRunning = false;
                 isCrouching = false;
                 //isClimbing = false;
@@ -499,12 +552,34 @@ public class PlayerController : MonoBehaviour
                     CanMove();
             }
         }
+
+        if (isCrouching)
+        {
+            cap.size = new Vector2(cap.size.x, 0.7557176f);
+            cap.offset = new Vector2(cap.offset.x, -0.4464909f);
+        }
+        if (isJumping)
+        {
+            cap.size = new Vector2(cap.size.x, 1.067267f);
+            cap.offset = new Vector2(cap.offset.x, -0.00194484f);
+        }
+        else if (!isCrouching && !isJumping)
+        {
+            cap.size = new Vector2(cap.size.x, defaultValue);
+            cap.offset = new Vector2(cap.offset.x, defaultOffset);
+        }
+    }
+
+    IEnumerator SetToBackground(float time, Collider2D collider)
+    {
+        yield return new WaitForSeconds(time);
+        collider.GetComponent<SpriteRenderer>().sortingLayerName = "Background";
     }
 
     void Footstep()
     {
         audioSource.clip = footsteps[Random.Range(0, footsteps.Length)];
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Step"))
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Step") || animator.GetCurrentAnimatorStateInfo(0).IsName("StepLeft"))
         {
             audioSource.pitch = Random.Range(0.85f, 0.95f);
             audioSource.volume = 0.35f;
@@ -528,6 +603,11 @@ public class PlayerController : MonoBehaviour
     void ChangeJump()
     {
         isJumpingUp = !isJumpingUp;
+
+        if (rb.bodyType == RigidbodyType2D.Dynamic)
+            rb.bodyType = RigidbodyType2D.Kinematic;
+        else
+            rb.bodyType = RigidbodyType2D.Dynamic;
     }
 
     void CheckFallShort()
@@ -652,10 +732,18 @@ public class PlayerController : MonoBehaviour
 
     void JumpUpMove()
     {
-        if (isForward)
+        /*if (isForward)
             rb.velocity = new Vector2(0.15f, 2.8f);
         else if (!isForward)
-            rb.velocity = new Vector2(-0.15f, 2.8f);
+            rb.velocity = new Vector2(-0.15f, 2.8f);*/
+    }
+
+    void JumpUpMoveWallAbove()
+    {
+        /*if (isForward)
+            rb.velocity = new Vector2(0.15f, 1.35f);
+        else if (!isForward)
+            rb.velocity = new Vector2(-0.15f, 1.35f);*/
     }
 
     void JumpUpCheckForward()
@@ -665,6 +753,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey("right"))
             {
                 animator.ResetTrigger("Jump");
+                animator.ResetTrigger("JumpWallAbove");
                 animator.Play("StandingJump");
             }
         }
@@ -673,7 +762,8 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey("left"))
             {
                 animator.ResetTrigger("Jump");
-                animator.Play("StandingJump");
+                animator.ResetTrigger("JumpWallAbove");
+                animator.Play("StandingJumpLeft");
             }
         }
     }
@@ -712,10 +802,10 @@ public class PlayerController : MonoBehaviour
 
     void HangingMoveToLedge()
     {
-        if (isForward)
+        /*if (isForward)
             rb.velocity = new Vector2(0.85f, rb.velocity.y);
         else if (!isForward)
-            rb.velocity = new Vector2(-0.85f, rb.velocity.y);
+            rb.velocity = new Vector2(-0.85f, rb.velocity.y);*/
     }
 
     void BeforeHanging()
@@ -726,28 +816,28 @@ public class PlayerController : MonoBehaviour
 
     void ClimbingUpMove()
     {
-        rb.velocity = new Vector2(0, 2.225f);
+        //rb.velocity = new Vector2(0, 2.225f);
     }
 
     void ClimbingUpMoveForward()
     {
-        if (isForward)
+        /*if (isForward)
             rb.velocity = new Vector2(0.665f, 0);
         else if (!isForward)
-            rb.velocity = new Vector2(-0.665f, 0);
+            rb.velocity = new Vector2(-0.665f, 0);*/
     }
 
     void DescendingMoveBack()
     {
-        if (isForward)
+        /*if (isForward)
             rb.velocity = new Vector2(-0.665f, 0);
         else if (!isForward)
-            rb.velocity = new Vector2(0.665f, 0);
+            rb.velocity = new Vector2(0.665f, 0);*/
     }
 
     void DescendingMove()
     {
-        rb.velocity = new Vector2(0, -2.95f);
+        //rb.velocity = new Vector2(0, -2.95f);
     }
 
     void StopDescending()
@@ -778,13 +868,15 @@ public class PlayerController : MonoBehaviour
 
     void LevelFinish()
     {
-        rb.velocity = new Vector2(0.16f, 0.36f);
+        //rb.velocity = new Vector2(0.16f, 0.36f);
+        rb.bodyType = RigidbodyType2D.Kinematic;
     }
 
     void LevelFinishStop()
     {
-        rb.velocity = new Vector2(0, 0);
+        //rb.velocity = new Vector2(0, 0);
         spriteRenderer.enabled = false;
+        rb.bodyType = RigidbodyType2D.Dynamic;
         Invoke("NextLevel", 3);
     }
 

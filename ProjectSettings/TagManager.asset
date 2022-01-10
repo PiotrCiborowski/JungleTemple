@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Exit
+  - Gate
+  - Above Wall
   layers:
   - Default
   - TransparentFX
@@ -45,8 +47,14 @@ TagManager:
   - name: Background
     uniqueID: 2840867081
     locked: 0
+  - name: GateInBack
+    uniqueID: 1797011787
+    locked: 0
   - name: Main
     uniqueID: 3135796393
+    locked: 0
+  - name: GateInFront
+    uniqueID: 1320352909
     locked: 0
   - name: Foreground
     uniqueID: 2277244693

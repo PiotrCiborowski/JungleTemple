@@ -120,7 +120,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5830324497288268920}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5830324496415985949}
@@ -167,7 +167,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1159170903
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 161484a0173f0f048ae2d690e571d65c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -192,8 +192,8 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 68313e16e37691449a4de6527783605f, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_UpdateMode: 1
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -213,7 +213,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.02231276, y: -0.14633065}
-  m_Size: {x: 0.41119504, y: 1.3560382}
+  m_Size: {x: 0.17334586, y: 1.3560382}
   m_Direction: 0
 --- !u!50 &5830324497288268924
 Rigidbody2D:
@@ -259,6 +259,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 64bafd573bef26846b590b73969f3b0a, type: 3}
   fallHurt: {fileID: 8300000, guid: 4f515957778d2b7489a5eea623a2b2cc, type: 3}
   fallDeath: {fileID: 8300000, guid: b5757bcaebad60244b73ca79ee0432aa, type: 3}
+  sliceDeath: {fileID: 8300000, guid: 0159ddb8cfb88f9458ac1be224a4ca24, type: 3}
   hurtFlash: {fileID: 0}
   hurtTime: 0.1
 --- !u!82 &5830324497288268915
