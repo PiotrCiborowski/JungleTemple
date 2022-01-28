@@ -32,7 +32,7 @@ public class AssignOrder : MonoBehaviour
                 spriteRenderer.sortingLayerName = "Foreground";
         }
 
-        if (gameObject.tag == "Gate")
+        if (gameObject.tag == "Gate" && !PlayerController.isDead)
         {
             if (spriteRenderer.gameObject.transform.position.x < hero.transform.position.x - 0.2f)
                 spriteRenderer.sortingLayerName = "GateInBack";

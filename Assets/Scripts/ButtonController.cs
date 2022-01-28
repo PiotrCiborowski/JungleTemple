@@ -12,81 +12,77 @@ public class ButtonController : MonoBehaviour
     [SerializeField] GameObject gate;
     [SerializeField] bool canOpen;
 
+    Animator gateAnim;
+    AudioSource gateAudio;
+
     void Start()
     {
         animator = GetComponent<Animator>();
         player = GameObject.FindWithTag("Player");
+
+        gateAnim = gate.GetComponent<Animator>();
+        gateAudio = gate.GetComponent<AudioSource>();
 
         //player.transform.position = new Vector2(this.transform.position.x - 0.6f, this.transform.position.y);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player" && PlayerController.pressButton && PlayerController.almostPressButton)
+        if (collision.gameObject.tag == "Player"/* && PlayerController.pressButton && PlayerController.almostPressButton*/)
         {
             animator.SetBool("Pressed", true);
+            GetComponent<AudioSource>().Play();
 
             if (canOpen && !inUse)
             {
-                //gate.GetComponent<Animator>().SetBool("isOpen", true);
-                gate.GetComponent<Animator>().SetTrigger("testOpen");
-                gate.GetComponent<SpriteRenderer>().sortingLayerName = "Background";
-
-                //Invoke("CloseGate", 5);
-
-                Debug.Log("Opens the gate");
-            }
-            else if (!canOpen && !inUse && !gate.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("CloseGate") && !gate.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("OpeningGate"))
-            {
-                //CancelInvoke("CloseGate");
-                //CloseGate();
-
-                gate.GetComponent<Animator>().speed = 7;
-                gate.GetComponent<Animator>().Play("ClosingGate");
-
-                Debug.Log("Closes the gate");
-            }
-
-            inUse = true;
-        }
-    }
-
-    void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Player" && PlayerController.almostPressButton)
-        {
-            if (player.transform.position.x >= this.transform.position.x - 0.325f && player.transform.position.x <= this.transform.position.x - 0.275f)
-            {
-                animator.SetBool("Pressed", true);
-
-                if (canOpen && !inUse)
+                if (gateAnim.GetCurrentAnimatorStateInfo(0).IsName("CloseGate"))
                 {
-                    gate.GetComponent<Animator>().SetBool("isOpen", true);
-                    gate.GetComponent<SpriteRenderer>().sortingLayerName = "Background";
-
+                    gateAnim.SetTrigger("Open");
+                    gateAudio.clip = gate.GetComponent<GateEvents>().gateOpening;
+                    gateAudio.Play();
                     Debug.Log("Opens the gate");
                 }
-                else if (!canOpen && !inUse)
+                else if (gateAnim.GetCurrentAnimatorStateInfo(0).IsName("OpeningGate"))
+                    Debug.Log("Gate is already opening");
+                else if (gateAnim.GetCurrentAnimatorStateInfo(0).IsName("OpenGate"))
                 {
-                    Debug.Log("Closes the gate");
+                    gateAnim.Play("OpenGate", -1, 0);
+                    Debug.Log("Reset open timer");
+                }
+                /*else if (gateAnim.GetCurrentAnimatorStateInfo(0).IsName("ClosingGate"))
+                {
+                    float currentNormalizedTime = 1f - gateAnim.GetCurrentAnimatorStateInfo(0).normalizedTime;
+                    gateAnim.Play("OpeningGate", -1, currentNormalizedTime);
+                    Debug.Log("Open closing gate");
+                }*/
+            }
+            else if (!canOpen && !inUse)
+            {
+                gateAnim.speed = 20;
+
+                if (gateAnim.GetCurrentAnimatorStateInfo(0).IsName("CloseGate"))
+                {
+                    gateAnim.speed = 1;
+                    Debug.Log("Gate is already closed");
+                }
+                /*else if (gateAnim.GetCurrentAnimatorStateInfo(0).IsName("OpeningGate"))
+                {
+                    float currentTime = 1f - gateAnim.GetCurrentAnimatorStateInfo(0).normalizedTime;
+                    gateAnim.Play("ClosingGate", -1, currentTime);
+                    Debug.Log("Close opening gate");
+                }*/
+                else if (gateAnim.GetCurrentAnimatorStateInfo(0).IsName("OpenGate"))
+                {
+                    gateAnim.Play("ClosingGate", -1, 0);
+                    gateAudio.Stop();
+                    Debug.Log("Close gate");
+                }
+                else if (gateAnim.GetCurrentAnimatorStateInfo(0).IsName("ClosingGate"))
+                {
+                    gateAudio.Stop();
+                    Debug.Log("Fast close gate");
                 }
             }
-            /*else if (collision.gameObject.tag == "Player" && PlayerController.pressButton)
-            {
-                animator.SetBool("Pressed", true);
-
-                if (canOpen && !inUse)
-                {
-                    gate.GetComponent<Animator>().SetBool("isOpen", true);
-                    gate.GetComponent<SpriteRenderer>().sortingLayerName = "Background";
-
-                    Debug.Log("Opens the gate");
-                }
-                else if (!canOpen && !inUse)
-                {
-                    Debug.Log("Closes the gate");
-                }
-            }*/
 
             inUse = true;
         }
@@ -96,6 +92,7 @@ public class ButtonController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            //gateAnim.speed = 1;
             animator.SetBool("Pressed", false);
             inUse = false;
         }

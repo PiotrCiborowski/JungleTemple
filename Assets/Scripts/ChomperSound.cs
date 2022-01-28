@@ -52,4 +52,15 @@ public class ChomperSound : MonoBehaviour
             //GetComponent<SpriteRenderer>().sprite = bloodyChompers[0];
         }
     }
+
+    void SoundlessChomp()
+    {
+        if (whichCollider == 2 && animator.GetBool("Killed") == false)
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().ChomperKill(gameObject);
+            animator.Play("ChompBloody", -1, animator.GetCurrentAnimatorStateInfo(0).normalizedTime + 0.05f);
+            animator.SetBool("Killed", true);
+            //GetComponent<SpriteRenderer>().sprite = bloodyChompers[0];
+        }
+    }
 }
